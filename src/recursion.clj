@@ -225,14 +225,15 @@
 
 (defn split-into-monotonics [a-seq]
 ;  (loop [;theSeq a-seq
-;         init-set (reverse (inits a-seq))
+;         init-set (rest (reverse (inits a-seq)))
 ;         ;init-count (count init-set)
 ;         accum '()]
 ;		 (if (empty? init-set)
 ;		   accum
-;		   (recur (reverse (inits (drop (count (first (my-drop-while monotonic? init-set))) a-seq))) 
+;		   (recur (rest (reverse (inits (drop (count (first (my-drop-while monotonic? init-set))) a-seq)))) 
 ;		          (conj accum (first (reverse (take-while monotonic? init-set))))))))
 )
+
 ;  (if (< (count a-seq) 3)
 ;    a-seq
 ;    (if (or (< (first a-seq) (second a-seq)) 
@@ -247,9 +248,33 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+
+(defn swap-num [a-set num]
+  (loop [counter 1
+         accum []]
+    (if (empty? a-set)
+      a-set
+      (if (> num (count a-set))
+        a-set
+        (if (= counter 1)
+          (recur (inc counter) (conj accum (get a-set (dec num))))
+          (if (> counter (count a-set))
+            accum
+            (if (= counter num)
+              (recur (inc counter) (conj accum (first a-set)))
+              (recur (inc counter) (conj accum (get a-set (dec counter)))))))))))
+            
+;  (if (empty? a-set)
+;    a-set
+;    (if (> num (count a-set))
+;      a-set
+;      (let [uno (first a-set)
+;            swapper (drop (dec num) a-set)]
+;        )
+
 (defn permutations [a-set]
-  (loop [rotated (rotations a-set)]
-    ()))
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
